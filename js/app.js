@@ -54,21 +54,6 @@ player.prototype.update = function() {
 
 };
 
-var checkCollisions = function() {
-    for (var i = 0, len = allEnemies.length; i < len; i++) {
-        if (player.x < allEnemies[i].x + 50 &&
-            player.x + 50 > allEnemies[i].x &&
-            player.y < allEnemies[i].y + 40 &&
-            player.y + 40 > allEnemies[i].y) {
-
-            allEnemies = [];
-            document.location.reload();
-
-        }
-    }
-};
-
-
 
 player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
