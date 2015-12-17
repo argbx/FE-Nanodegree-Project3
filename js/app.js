@@ -3,7 +3,7 @@ var BOTTOM_EDGE = 404;
 var TILE_WIDTH = 101;
 var TILE_HEIGHT = 83;
 var POINTS = 0;
-ENEMIES = 5;
+var ENEMIES = 5;
 
 
 // Enemies our player must avoid
