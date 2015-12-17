@@ -1,11 +1,14 @@
-var rightEdge = 505;
-var bottomEdge = 404;
-var tileWidth = 101;
-var tileHeight = 83;
-var points = 0;
+var RIGHT_EDGE = 505;
+var BOTTOM_EDGE = 404;
+var TILE_WIDTH = 101;
+var TILE_HEIGHT = 83;
+var POINTS = 0;
+ENEMIES = 5;
+
 
 // Enemies our player must avoid
 var Enemy = function(x, y) {
+    'use strict';
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
@@ -23,18 +26,14 @@ Enemy.prototype.update = function(dt, player) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    //this.checkCollision(player);
 
     var speed = Math.random() * (200 - 100) + 100;
-    //console.log(speed);
-    if (this.x < rightEdge) {
+    if (this.x < RIGHT_EDGE) {
         this.x += speed * dt;
-        //console.log(this.x);
     } else {
         this.x = 0;
-    } //var now = Date.now(),
-    //dt = (now - lastTime) / 1000.0;
-    //enemy.render();
+        this.y = Math.floor(Math.random() * 200) + 20;
+    }
 
 };
 
@@ -43,9 +42,7 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprites), this.x, this.y);
 };
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
+// Create the player and players initial position
 var player = function() {
     this.sprite = 'images/char-boy.png';
     this.x = 202;
@@ -58,13 +55,13 @@ player.prototype.update = function() {
 };
 
 var checkCollisions = function() {
-    for (var i = 0; i < allEnemies.length; i++) {
+    for (var i = 0, len = allEnemies.length; i < len; i++) {
         if (player.x < allEnemies[i].x + 50 &&
             player.x + 50 > allEnemies[i].x &&
             player.y < allEnemies[i].y + 40 &&
             player.y + 40 > allEnemies[i].y) {
 
-
+            allEnemies = [];
             document.location.reload();
 
         }
@@ -78,63 +75,65 @@ player.prototype.render = function() {
 
 };
 player.prototype.handleInput = function(key) {
-    console.log(this.x, this.y);
-
     switch (key) {
         case 'left':
-            if (this.x - tileWidth < 0) {
+            if (this.x - TILE_WIDTH < 0) {
                 this.x = 0;
             } else {
-                this.x -= tileWidth;
+                this.x -= TILE_WIDTH;
             }
             break;
 
         case 'right':
-            if (this.x + tileWidth >= rightEdge) {
-
+            if (this.x + TILE_WIDTH >= RIGHT_EDGE) {
                 this.x = 404;
             } else {
-                this.x += tileWidth;
+                this.x += TILE_WIDTH;
             }
             break;
 
         case 'up':
-            if (this.y - tileHeight < 0) {
-                points = points + 1
+            if (this.y - TILE_HEIGHT < 0) {
+                POINTS = POINTS + 1;
                 this.y = 404;
-
                 var canvas = document.querySelector('canvas');
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                ctx.font = "36pt Impact";
-                ctx.textAlign = "center";
-                ctx.fillStyle = "white";
-                ctx.fillText("Your Point" + " " + points, canvas.width / 2, 40);
-                ctx.strokeStyle = "black";
+                ctx.font = '36pt Impact';
+                ctx.textAlign = 'center';
+                ctx.fillStyle = 'white';
+                ctx.fillText('Your Point' + ' ' + POINTS, canvas.width / 2, 40);
+                ctx.strokeStyle = 'black';
                 ctx.lineWidth = 3;
-                ctx.strokeText("Your Point" + " " + points, canvas.width / 2, 40);
+                ctx.strokeText('Your Point' + ' ' + POINTS, canvas.width / 2, 40);
 
             } else {
-                this.y -= tileHeight;
+                this.y -= TILE_HEIGHT;
             }
             break;
 
         case 'down':
-            if (this.y + tileHeight >= bottomEdge) {
+            if (this.y + TILE_HEIGHT >= BOTTOM_EDGE) {
                 this.y = 404;
             } else {
-                this.y += tileHeight;
+                this.y += TILE_HEIGHT;
             }
             break;
     }
 };
 
-// Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-var allEnemies = [new Enemy(0, 60), new Enemy(101, 150), new Enemy(3, 3)];
+var allEnemies = [];
 var player = new player();
+
+// Create number of set enemies in random locations
+for (var i = 0, len = ENEMIES; i < len; i++) {
+    x = Math.floor(Math.random() * 200) + 20;
+    y = Math.floor(Math.random() * 200) + 20;
+    allEnemies.push(new Enemy(x, y));
+}
+
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
