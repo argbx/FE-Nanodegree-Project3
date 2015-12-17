@@ -2,7 +2,7 @@ var rightEdge = 505;
 var bottomEdge = 404;
 var tileWidth = 101;
 var tileHeight = 83;
-var failed = 0;
+var points = 0;
 
 // Enemies our player must avoid
 var Enemy = function(x, y) {
@@ -80,7 +80,6 @@ player.prototype.render = function() {
 player.prototype.handleInput = function(key) {
     console.log(this.x, this.y);
 
-    console.log(failed);
     switch (key) {
         case 'left':
             if (this.x - tileWidth < 0) {
@@ -101,7 +100,7 @@ player.prototype.handleInput = function(key) {
 
         case 'up':
             if (this.y - tileHeight < 0) {
-                failed = failed + 1
+                points = points + 1
                 this.y = 404;
 
                 var canvas = document.querySelector('canvas');
@@ -110,10 +109,10 @@ player.prototype.handleInput = function(key) {
                 ctx.font = "36pt Impact";
                 ctx.textAlign = "center";
                 ctx.fillStyle = "white";
-                ctx.fillText("Your Point" + " " + failed, canvas.width / 2, 40);
+                ctx.fillText("Your Point" + " " + points, canvas.width / 2, 40);
                 ctx.strokeStyle = "black";
                 ctx.lineWidth = 3;
-                ctx.strokeText("Your Point" + " " + failed, canvas.width / 2, 40);
+                ctx.strokeText("Your Point" + " " + points, canvas.width / 2, 40);
 
             } else {
                 this.y -= tileHeight;
@@ -135,7 +134,6 @@ player.prototype.handleInput = function(key) {
 // Place the player object in a variable called player
 
 var allEnemies = [new Enemy(0, 60), new Enemy(101, 150), new Enemy(3, 3)];
-//var Enemy = new Enemy(10,10);
 var player = new player();
 
 // This listens for key presses and sends the keys to your
