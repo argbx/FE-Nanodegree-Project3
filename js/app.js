@@ -6,7 +6,7 @@ var POINTS = 0;
 var ENEMIES = 5;
 
 
-// Enemies our player must avoid
+// Enemies our Player must avoid
 var Enemy = function(x, y) {
     'use strict';
     // Variables applied to each of our instances go here,
@@ -22,7 +22,7 @@ var Enemy = function(x, y) {
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
-Enemy.prototype.update = function(dt, player) {
+Enemy.prototype.update = function(dt, Player) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
@@ -42,24 +42,24 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprites), this.x, this.y);
 };
 
-// Create the player and players initial position
-var player = function() {
+// Create the Player and Players initial position
+var Player = function() {
     this.sprite = 'images/char-boy.png';
     this.x = 202;
     this.y = 404;
 };
 
-player.prototype.update = function() {
+Player.prototype.update = function() {
 
 
 };
 
 
-player.prototype.render = function() {
+Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
 };
-player.prototype.handleInput = function(key) {
+Player.prototype.handleInput = function(key) {
     switch (key) {
         case 'left':
             if (this.x - TILE_WIDTH < 0) {
@@ -107,10 +107,10 @@ player.prototype.handleInput = function(key) {
 };
 
 // Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
+// Place the Player object in a variable called Player
 
 var allEnemies = [];
-var player = new player();
+var Player = new Player();
 
 // Create number of set enemies in random locations
 for (var i = 0, len = ENEMIES; i < len; i++) {
@@ -130,5 +130,5 @@ document.addEventListener('keyup', function(e) {
         40: 'down'
     };
 
-    player.handleInput(allowedKeys[e.keyCode]);
+    Player.handleInput(allowedKeys[e.keyCode]);
 });

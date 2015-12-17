@@ -1,10 +1,10 @@
 /* Engine.js
  * This file provides the game loop functionality (update entities and render),
  * draws the initial game board on the screen, and then calls the update and
- * render methods on your player and enemy objects (defined in your app.js).
+ * render methods on your Player and enemy objects (defined in your app.js).
  *
  * A game engine works by drawing the entire game screen over and over, kind of
- * like a flipbook you may have created as a kid. When your player moves across
+ * like a flipbook you may have created as a kid. When your Player moves across
  * the screen, it may look like just that image/character is moving or being
  * drawn but that is not the case. What's really happening is the entire "scene"
  * is being drawn over and over, presenting the illusion of animation.
@@ -86,7 +86,7 @@ var Engine = (function(global) {
     /* This is called by the update function and loops through all of the
      * objects within your allEnemies array as defined in app.js and calls
      * their update() methods. It will then call the update function for your
-     * player object. These update methods should focus purely on updating
+     * Player object. These update methods should focus purely on updating
      * the data/properties related to the object. Do your drawing in your
      * render methods.
      */
@@ -94,7 +94,7 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
-        player.update();
+        Player.update();
     }
 
     /* This function initially draws the "game level", it will then call
@@ -141,7 +141,7 @@ var Engine = (function(global) {
 
     /* This function is called by the render function and is called on each game
      * tick. Its purpose is to then call the render functions you have defined
-     * on your enemy and player entities within app.js
+     * on your enemy and Player entities within app.js
      */
     function renderEntities() {
         /* Loop through all of the objects within the allEnemies array and call
@@ -151,7 +151,7 @@ var Engine = (function(global) {
             enemy.render();
         });
 
-        player.render();
+        Player.render();
     }
 
     /* This function does nothing but it could have been a good place to
@@ -161,10 +161,10 @@ var Engine = (function(global) {
 
     var checkCollisions = function() {
         for (var i = 0, len = allEnemies.length; i < len; i++) {
-            if (player.x < allEnemies[i].x + 50 &&
-                player.x + 50 > allEnemies[i].x &&
-                player.y < allEnemies[i].y + 40 &&
-                player.y + 40 > allEnemies[i].y) {
+            if (Player.x < allEnemies[i].x + 50 &&
+                Player.x + 50 > allEnemies[i].x &&
+                Player.y < allEnemies[i].y + 40 &&
+                Player.y + 40 > allEnemies[i].y) {
 
                 allEnemies = [];
                 document.location.reload();
